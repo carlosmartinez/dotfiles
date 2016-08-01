@@ -1,0 +1,377 @@
+set shell=/bin/bash
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'airblade/vim-gitgutter'
+Plugin 'burnettk/vim-angular'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'ecomba/vim-ruby-refactoring'
+Plugin 'ervandew/supertab'
+Plugin 'godlygeek/tabular'
+Plugin 'othree/html5.vim'
+Plugin 'int3/vim-extradite'
+Plugin 'jasoncodes/ctrlp-modified.vim'
+Plugin 'jgdavey/vim-blockle'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'kien/ctrlp.vim'
+Plugin 'matchit.zip'
+Plugin 'mattn/emmet-vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-markdown'
+Plugin 'rake.vim'
+Plugin 'reedes/vim-pencil'
+Plugin 'reedes/vim-colors-pencil'
+Plugin 'reedes/vim-thematic'
+Plugin 'repeat.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-surround'
+Plugin 'unimpaired.vim'
+Plugin 'junegunn/goyo.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-scripts/tComment'
+Bundle 'jlanzarotta/bufexplorer'
+Bundle 'altercation/vim-colors-solarized'
+
+call vundle#end()
+filetype plugin indent on
+syntax enable
+
+set t_Co=256
+set clipboard=unnamed
+
+" set a margin at 80 chars, not enforced
+set colorcolumn=80
+
+" don't insert a line break at 80 chars, thanks
+set tw=0
+set splitbelow
+set splitright
+
+set lbr
+
+" Open and reload vimrc
+map <leader>vrc :edit $MYVIMRC<cr>
+map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
+
+" Ruby open spec
+map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
+
+" Run test, support all common Ruby test libs
+map <leader>rt :ccl<cr>:w<cr>:call RunTest(expand('%'))<cr><cr>
+
+" As above but only test on current line
+map <leader>rtl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
+
+" Repeats one of the above, for when you've navigated away from the test file
+map <leader>rr :ccl<cr>:w<cr>:call RepeatLastTest()<cr><cr>
+
+" pencil
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,md,mkd call pencil#init()
+augroup END
+
+" emmet settings
+let g:user_emmet_leader_key='<C-Y>'
+
+function! RepeatLastTest()
+  if exists("g:last_test")
+    call RunTestCommand(g:last_test)
+  else
+    echo "No last test, <leader>rt to run this file."
+  end
+endfunction
+
+map <leader>rc :%!ruby-class-generator<cr>
+vmap <leader>rc <esc>:'<,'> !ruby-class-generator<cr>
+
+" Run a test file at line (currently supports Ruby only)
+function! RunTestAtLine(filename, line_number)
+  let test_command = InferRubyTestCommand(a:filename)
+
+  if strlen(test_command)
+    let test_command_with_line = test_command . ":" . a:line_number
+    call RunTestCommand(test_command_with_line)
+  else
+    echo "Not a recognized test '" . a:filename . "'"
+  end
+endfunction!
+
+" Run a test file (currently supports Ruby only)
+function! RunTest(filename)
+  let test_command = InferRubyTestCommand(a:filename)
+
+  if strlen(test_command)
+    call RunTestCommand(test_command)
+  else
+    echo "Not a recognized test '" . a:filename . "'"
+  end
+endfunction
+
+function! RunTestCommand(test_command)
+  let g:last_test = a:test_command
+  exec "Dispatch " . a:test_command
+  " exec("!testrunner-client " . a:test_command)
+endfunction
+
+" Infer and return corresponding command to run a Ruby test file
+function! InferRubyTestCommand(filename)
+    if a:filename =~ "\.feature$"
+      let command  = "bundle exec cucumber --strict"
+    elseif a:filename =~ "_spec\.rb$"
+      let command = "bundle exec rspec"
+    elseif a:filename =~ "_test\.rb$"
+      let command = "bundle exec ruby -I test"
+    else
+      return ""
+    end
+
+    return command . " " . a:filename
+endfunction
+
+" Infer RSpec file for current file
+function! InferSpecFile(filename)
+    if a:filename =~ '^app'
+      let spec_file = substitute(a:filename, '^app', 'spec', '')
+    elseif a:filename =~ '^lib/'
+      let spec_file = substitute(a:filename, '^lib', 'spec', '')
+    else
+      let spec_file = 'spec/' . a:filename
+    endif
+
+    let path = substitute(spec_file, '\.rb', '_spec.rb', '')
+
+    return path
+endfunction
+
+" Save with CTRL-s
+:nmap <C-s> :w<CR>
+:imap <C-s> <Esc>:w<CR>a
+:imap <C-s> <Esc><C-s>
+
+set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
+set guioptions-=T " no toolbar
+set statusline=%<%f\ %h%m%r%=%-20.(line=%l,col=%c%V,totlin=%L%)\%h%m%r%=%-40(,%n%Y%)\%P%#warningmsg#%{SyntasticStatuslineFlag()}%*
+set laststatus=2  " Always show status line.
+set number " line numbers
+set scrolloff=3 " More context around cursor
+set hlsearch  " highlight search matches...
+set incsearch " ...as you type
+set ignorecase
+set smartcase
+set hidden " Allow buffer switching without saving
+set history=1000
+set wildmode=list:longest " Shell-like behaviour for command autocompletion
+set list listchars=tab:»·,trail:·,nbsp:·
+set visualbell
+set mousehide
+set cf  " Enable error files & error jumping.
+set autowrite  " Writes on make/shell commands
+set ruler  " Ruler on
+set nowrap  " Line wrapping off
+set timeoutlen=500
+" swap files are really not needed if you're using git
+set noswapfile
+let mapleader = ","
+
+" Display soft column limit
+au WinEnter,FileType * set cc=
+au WinEnter,FileType ruby,eruby,rspec,cucumber set cc=80
+" Override the colour in .vimrc.local like this:
+"hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+
+set tabstop=2
+set smarttab
+set shiftwidth=2
+set autoindent
+set expandtab
+set backspace=start,indent,eol
+
+" mouse mode for terminal
+set mouse=a
+
+autocmd FileType make set noexpandtab
+
+" treat scss files as css
+au BufRead,BufNewFile *.scss set filetype=css
+
+runtime! plugin/matchit.vim " extends % to do/end etc
+
+
+" Rename current file
+map <leader>n :call RenameFile()<cr>
+
+" Highlight trailing whitespace
+highlight RedundantSpaces term=standout ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+
+" ,h to dismiss search result highlighting until next search or press of 'n'
+:noremap <silent> <leader>h :noh<CR>
+
+" ,w to toggle line wrap
+:map <silent> <Leader>w :set wrap!<CR>
+
+" ,f to find current file in NERDTree
+map <silent> <Leader>f :NERDTreeFind<CR>
+
+" ,m to toggle NERDTree
+nmap <silent> <Leader>m :NERDTreeToggle<CR>
+
+" ,x to open git commit history for current file
+nnoremap <Leader>x :Extradite<CR>
+
+" ,, to run current spec file
+map <Leader>, :wa\|:!rspec %<CR>
+
+" Fix supertab/endwise incompatibility
+let g:SuperTabCrMapping = 0
+
+" ,r for rake
+map <Leader>r :Rake<CR>
+
+" ,s to toggle spelling highlighting
+nmap <silent> <Leader>s :setlocal spell! spelllang=en_gb<CR>
+
+"CtrlP
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+map <leader>t :CtrlP<cr>
+map <leader>g :CtrlPModified<cr>
+let g:ctrlp_show_hidden = 1
+
+" Carlos stuff
+map j gj
+map k gk
+
+" airline
+let g:airline_theme='luna'
+
+" For solarized plugin (color scheme)
+" https://github.com/altercation/vim-colors-solarized
+syntax enable
+set background=dark
+let g:solarized_termtrans = 1
+colorscheme solarized
+
+" Vim-markdown
+let g:vim_markdown_folding_disabled=1
+
+" NERDTree
+" open NERDTree if no files were specified on startup
+autocmd vimenter * if !argc() | NERDTree | endif
+" close vim if only window left is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" make Y consistent with C and D
+nnoremap Y y$
+
+" Rename current file thanks @samphippen via @bestie
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+
+" strip trailing whitespace
+"autocmd BufWritePre,FileWritePre * call StripTrailingWhitespace()
+function! StripTrailingWhitespace()
+  normal mz
+  normal Hmy
+  exec '%s/\s*$//g'
+  normal 'yz<cr>
+  normal `z
+endfunction
+nmap <silent> <Leader>sw :call StripTrailingWhitespace()<CR>
+
+let g:syntastic_auto_loc_list=1
+let g:syntastic_html_tidy_ignore_errors = [ '<tabset>', '<tab>', 'mno-' ]
+let g:syntastic_ruby_checkers=['rubocop', 'mri']
+
+function! OpenInBrowser(url)
+  if has("mac")
+    exec '!open '.a:url
+  else
+    exec '!firefox -new-tab '.a:url.' &'
+  endif
+endfunction
+
+" Open the Ruby ApiDock page for the word under cursor
+function! OpenRubyDoc(keyword)
+  let url = 'http://apidock.com/ruby/'.a:keyword
+  call OpenInBrowser(url)
+endfunction
+noremap RB :call OpenRubyDoc(expand('<cword>'))<CR><CR>
+
+" Open the Rails ApiDock page for the word under cursor
+function! OpenRailsDoc(keyword)
+  if filereadable('config/application.rb')
+    let url = 'http://apidock.com/rails/'.a:keyword
+  endif
+  call OpenInBrowser(url)
+endfunction
+noremap RR :call OpenRailsDoc(expand('<cword>'))<CR><CR>
+
+" :SudoW to save file using sudo (must be already authorised, eg sudo -v)
+command! -bar -nargs=0 SudoW   :silent exe "write !sudo tee % >/dev/null"|silent edit!
+
+" Use xmllint to pretty format XML
+au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+
+" settings for the git-gutter
+highlight SignColumn ctermbg=234
+
+" Source a local configuration file if available.
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
+
+" vimroom2 mapping
+nnoremap <silent> <leader>v :Goyo<cr>
+
+let g:thematic#themes = {
+\ 'bubblegum'  : { 'typeface': 'Menlo',
+\                  'font-size': 18,
+\                  'transparency': 10,
+\                  'linespace': 2,
+\                },
+\ 'pencil_dark' :{ 'colorscheme': 'pencil',
+\                  'background': 'dark',
+\                  'airline-theme': 'badwolf',
+\                  'ruler': 1,
+\                  'laststatus': 0,
+\                  'typeface': 'Source Code Pro Light',
+\                  'font-size': 20,
+\                  'transparency': 10,
+\                  'linespace': 8,
+\                },
+\ 'pencil_lite' :{ 'colorscheme': 'pencil',
+\                  'background': 'light',
+\                  'airline-theme': 'light',
+\                  'laststatus': 0,
+\                  'ruler': 1,
+\                  'typeface': 'Cousine',
+\                  'columns': 100,
+\                  'fullscreen': 1,
+\                  'transparency': 0,
+\                  'font-size': 16,
+\                  'linespace': 6,
+\                },
+\ }
+
