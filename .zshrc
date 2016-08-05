@@ -55,6 +55,9 @@ plugins=(git brew coffee vim-interaction ruby rails tmux github gem rvm osx)
 export PATH="/Users/carlosmartinez/.rvm/gems/ruby-2.2.0/bin:/Users/carlosmartinez/.rvm/gems/ruby-2.2.0@global/bin:/Users/carlosmartinez/.rvm/rubies/ruby-2.2.0/bin:/Users/carlosmartinez/.rvm/bin:/usr/local/heroku/bin:/Users/carlosmartinez/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/lib/node_modules/npm/bin/"
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# allow ctrl-s mapping in vim
+stty -ixon
+
 source $ZSH/oh-my-zsh.sh
 # source ~/bin/tmuxinator.zsh
 

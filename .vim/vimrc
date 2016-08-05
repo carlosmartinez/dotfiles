@@ -99,9 +99,8 @@ endfunction
 map <leader>rc :%!ruby-class-generator<cr>
 vmap <leader>rc <esc>:'<,'> !ruby-class-generator<cr>
 
-:nmap <C-s> :w<CR>
-:imap <C-s> <Esc>:w<CR>a
-:imap <C-s> <Esc><C-s>
+inoremap <C-s> <esc>:w<cr>
+nnoremap <C-s> :w<cr>
 
 set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
 set guioptions-=T " no toolbar
