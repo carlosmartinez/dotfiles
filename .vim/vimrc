@@ -99,66 +99,6 @@ endfunction
 map <leader>rc :%!ruby-class-generator<cr>
 vmap <leader>rc <esc>:'<,'> !ruby-class-generator<cr>
 
-" Run a test file at line (currently supports Ruby only)
-function! RunTestAtLine(filename, line_number)
-  let test_command = InferRubyTestCommand(a:filename)
-
-  if strlen(test_command)
-    let test_command_with_line = test_command . ":" . a:line_number
-    call RunTestCommand(test_command_with_line)
-  else
-    echo "Not a recognized test '" . a:filename . "'"
-  end
-endfunction!
-
-" Run a test file (currently supports Ruby only)
-function! RunTest(filename)
-  let test_command = InferRubyTestCommand(a:filename)
-
-  if strlen(test_command)
-    call RunTestCommand(test_command)
-  else
-    echo "Not a recognized test '" . a:filename . "'"
-  end
-endfunction
-
-function! RunTestCommand(test_command)
-  let g:last_test = a:test_command
-  exec "Dispatch " . a:test_command
-  " exec("!testrunner-client " . a:test_command)
-endfunction
-
-" Infer and return corresponding command to run a Ruby test file
-function! InferRubyTestCommand(filename)
-    if a:filename =~ "\.feature$"
-      let command  = "bundle exec cucumber --strict"
-    elseif a:filename =~ "_spec\.rb$"
-      let command = "bundle exec rspec"
-    elseif a:filename =~ "_test\.rb$"
-      let command = "bundle exec ruby -I test"
-    else
-      return ""
-    end
-
-    return command . " " . a:filename
-endfunction
-
-" Infer RSpec file for current file
-function! InferSpecFile(filename)
-    if a:filename =~ '^app'
-      let spec_file = substitute(a:filename, '^app', 'spec', '')
-    elseif a:filename =~ '^lib/'
-      let spec_file = substitute(a:filename, '^lib', 'spec', '')
-    else
-      let spec_file = 'spec/' . a:filename
-    endif
-
-    let path = substitute(spec_file, '\.rb', '_spec.rb', '')
-
-    return path
-endfunction
-
-" Save with CTRL-s
 :nmap <C-s> :w<CR>
 :imap <C-s> <Esc>:w<CR>a
 :imap <C-s> <Esc><C-s>
@@ -171,8 +111,8 @@ set number " line numbers
 set scrolloff=3 " More context around cursor
 set hlsearch  " highlight search matches...
 set incsearch " ...as you type
-set ignorecase
-set smartcase
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
 set hidden " Allow buffer switching without saving
 set history=1000
 set wildmode=list:longest " Shell-like behaviour for command autocompletion
@@ -201,6 +141,12 @@ set autoindent
 set expandtab
 set backspace=start,indent,eol
 
+" Make the current window big, but leave others context	
+set winwidth=84
+set winheight=5
+set winminheight=5
+set winheight=999
+
 " mouse mode for terminal
 set mouse=a
 
@@ -211,6 +157,8 @@ au BufRead,BufNewFile *.scss set filetype=css
 
 runtime! plugin/matchit.vim " extends % to do/end etc
 
+" DAS trick for outputting current dir name in cmd-line mode
+cnoremap <expr> %% expand('%:h').'/'
 
 " Rename current file
 map <leader>n :call RenameFile()<cr>
@@ -235,7 +183,7 @@ nmap <silent> <Leader>m :NERDTreeToggle<CR>
 nnoremap <Leader>x :Extradite<CR>
 
 " ,, to run current spec file
-map <Leader>, :wa\|:!rspec %<CR>
+" map <Leader>, :wa\|:!rspec %<CR>
 
 " Fix supertab/endwise incompatibility
 let g:SuperTabCrMapping = 0
@@ -375,3 +323,91 @@ let g:thematic#themes = {
 \                },
 \ }
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MAPS TO JUMP TO SPECIFIC FILES
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gr :topleft :split config/routes.rb<cr>
+map <leader>gg :topleft 100 :split Gemfile<cr>
+function! ShowRoutes()
+  " Requires 'scratch' plugin
+  :topleft 100 :split __Routes__
+  " Make sure Vim doesn't write __Routes__ as a file
+  :set buftype=nofile
+  " Delete everything
+  :normal 1GdG
+  " Put routes output in buffer
+  :0r! rake -s routes
+  " Size window to number of lines (1 plus rake output length)
+  :exec ":normal " . line("$") . "_ "
+  " Move cursor to bottom
+  :normal 1GG
+  " Delete empty trailing line
+  :normal dd
+endfunction
+map <leader>gR :call ShowRoutes()<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RemoveFancyCharacters COMMAND
+" Remove smart quotes, etc.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RemoveFancyCharacters()
+    let typo = {}
+    let typo["“"] = '"'
+    let typo["”"] = '"'
+    let typo["‘"] = "'"
+    let typo["’"] = "'"
+    let typo["–"] = '--'
+    let typo["—"] = '---'
+    let typo["…"] = '...'
+    :exe ":%s/".join(keys(typo), '\|').'/\=typo[submatch(0)]/ge'
+endfunction
+command! RemoveFancyCharacters :call RemoveFancyCharacters()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Running tests
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RunTests(filename)
+  " Write the file and run tests for the given filename
+  :w
+  :silent !echo;echo;echo;echo;echo
+  exec ":!bundle exec rspec " . a:filename
+endfunction
+
+function! SetTestFile()
+  " Set the spec file that tests will be run for.
+  let t:grb_test_file=@%
+endfunction
+
+function! RunTestFile(...)
+  if a:0
+    let command_suffix = a:1
+  else
+    let command_suffix = ""
+  endif
+
+  " Run the tests for the previously-marked file.
+  let in_spec_file = match(expand("%"), '_spec.rb$') != -1
+  if in_spec_file
+    call SetTestFile()
+  elseif !exists("t:grb_test_file")
+    return
+    end
+    call RunTests(t:grb_test_file . command_suffix)
+endfunction
+
+function! RunNearestTest()
+  let spec_line_number = line('.')
+  call RunTestFile(":" . spec_line_number)
+endfunction
+
+" Run this file
+map <leader>t :call RunTestFile()<cr>
+" Run only the example under the cursor
+map <leader>T :call RunNearestTest()<cr>
+" Run all test files
+map <leader>a :call RunTests('spec')<cr>
+
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
