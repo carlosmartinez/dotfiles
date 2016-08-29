@@ -3,3 +3,4 @@ carlosnotes.txt
 tags
 .tags_sorted_by_file
 .DS_Store
+.byebug_history

@@ -88,12 +88,10 @@ source $ZSH/oh-my-zsh.sh
 
 alias dx='git difftool'
 alias ctags="`brew --prefix`/bin/ctags"
-alias soc='cd /Users/carlosmartinez/src/tpo-social'
-alias fused='cd /Users/carlosmartinez/src/falafel'
-alias cap='cd /Users/carlosmartinez/src/core-apps-portal'
-alias pwc='cd /Users/carlosmartinez/src/pwc-enterprise'
-alias comp='cd /Users/carlosmartinez/src/compound'
-alias impac='cd /Users/carlosmartinez/src/impac-angular'
-alias cust='cd /Users/carlosmartinez/src/customer-data-export'
+alias soc='cd /Users/carlosmartinez/src/tpo/tpo-social'
+alias cap='cd /Users/carlosmartinez/src/nib/core-apps-portal'
+alias pwc='cd /Users/carlosmartinez/src/pwc/pwc-enterprise'
+alias rew='cd /Users/carlosmartinez/src/westfield/rewards_service'
 alias txt='cd /Users/carlosmartinez/Dropbox/txt'
 alias docs='cd /Users/carlosmartinez/Dropbox/docs'
+alias grati='cd /Users/carlosmartinez/src/scripts/grati'
