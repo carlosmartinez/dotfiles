@@ -1,6 +1,6 @@
 [alias]
 	st = status -sb
-	ci = commit
+	ci = commit -v
 	co = checkout
 	br = branch
   ready = rebase -i @{u}
