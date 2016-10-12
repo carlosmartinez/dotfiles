@@ -1,5 +1,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/carlosmartinez/.oh-my-zsh
+
+eval "$(rbenv init -)"
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -48,12 +51,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew coffee vim-interaction ruby rails tmux github gem rvm osx)
+plugins=(git brew coffee vim-interaction ruby rails tmux github gem osx)
 
 # User configuration
 
-export PATH="/Users/carlosmartinez/.rvm/gems/ruby-2.2.0/bin:/Users/carlosmartinez/.rvm/gems/ruby-2.2.0@global/bin:/Users/carlosmartinez/.rvm/rubies/ruby-2.2.0/bin:/Users/carlosmartinez/.rvm/bin:/usr/local/heroku/bin:/Users/carlosmartinez/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/lib/node_modules/npm/bin/"
 # export MANPATH="/usr/local/man:$MANPATH"
+
+export POW_DOMAINS=dev.gov.uk
 
 # allow ctrl-s mapping in vim
 stty -ixon
@@ -96,3 +100,5 @@ alias pub='cd /Users/carlosmartinez/src/gds/publishing-api'
 alias txt='cd /Users/carlosmartinez/Dropbox/txt'
 alias docs='cd /Users/carlosmartinez/Dropbox/docs'
 alias grati='cd /Users/carlosmartinez/src/scripts/grati'
+alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
+alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"

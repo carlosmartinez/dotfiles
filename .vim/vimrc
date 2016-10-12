@@ -65,19 +65,10 @@ set lbr
 
 " Open and reload vimrc
 map <leader>vrc :edit $MYVIMRC<cr>
-map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
+map <leader>1 :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
 
 " Ruby open spec
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
-
-" Run test, support all common Ruby test libs
-map <leader>rt :ccl<cr>:w<cr>:call RunTest(expand('%'))<cr><cr>
-
-" As above but only test on current line
-map <leader>rtl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
-
-" Repeats one of the above, for when you've navigated away from the test file
-map <leader>rr :ccl<cr>:w<cr>:call RepeatLastTest()<cr><cr>
 
 " pencil
 augroup pencil
@@ -87,14 +78,6 @@ augroup END
 
 " emmet settings
 let g:user_emmet_leader_key='<C-Y>'
-
-function! RepeatLastTest()
-  if exists("g:last_test")
-    call RunTestCommand(g:last_test)
-  else
-    echo "No last test, <leader>rt to run this file."
-  end
-endfunction
 
 map <leader>rc :%!ruby-class-generator<cr>
 vmap <leader>rc <esc>:'<,'> !ruby-class-generator<cr>
@@ -204,7 +187,7 @@ map j gj
 map k gk
 
 " airline
-let g:airline_theme='luna'
+let g:airline_theme='jellybeans'
 
 " For solarized plugin (color scheme)
 " https://github.com/altercation/vim-colors-solarized
@@ -250,7 +233,7 @@ nmap <silent> <Leader>sw :call StripTrailingWhitespace()<CR>
 let g:syntastic_auto_loc_list=1
 let g:syntastic_html_tidy_ignore_errors = [ '<tabset>', '<tab>', 'mno-' ]
 let g:syntastic_ruby_checkers=['rubocop', 'mri']
-let g:syntastic_quiet_messages = { 'regex': ['align the operands', 'prefer single*', 'avoid comma']}
+let g:syntastic_quiet_messages = { 'regex': ['line is too long', 'reference to past', 'align the operands', 'prefer single*', 'avoid comma', 'Missing top-level class documentation comment', 'Indent access modifiers', 'Do not use `::` for method calls', 'Missing frozen string literal comment'] }
 
 function! OpenInBrowser(url)
   if has("mac")
