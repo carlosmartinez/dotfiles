@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/carlosmartinez/.oh-my-zsh
+export ZSH=/Users/carlos/.oh-my-zsh
 
 eval "$(rbenv init -)"
 
@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew coffee vim-interaction ruby rails tmux github gem osx)
+plugins=(git brew coffee vim-interaction ruby tmux github gem osx)
 
 # User configuration
 
@@ -92,13 +92,13 @@ source $ZSH/oh-my-zsh.sh
 
 alias dx='git difftool'
 alias ctags="`brew --prefix`/bin/ctags"
-alias soc='cd /Users/carlosmartinez/src/tpo/tpo-social'
-alias cap='cd /Users/carlosmartinez/src/nib/core-apps-portal'
-alias pwc='cd /Users/carlosmartinez/src/pwc/pwc-enterprise'
-alias rew='cd /Users/carlosmartinez/src/westfield/rewards_service'
-alias pub='cd /Users/carlosmartinez/src/gds/publishing-api'
-alias txt='cd /Users/carlosmartinez/Dropbox/txt'
-alias docs='cd /Users/carlosmartinez/Dropbox/docs'
-alias grati='cd /Users/carlosmartinez/src/scripts/grati'
+alias soc='cd /Users/carlos/src/tpo/tpo-social'
+alias cap='cd /Users/carlos/src/nib/core-apps-portal'
+alias pwc='cd /Users/carlos/src/pwc/pwc-enterprise'
+alias rew='cd /Users/carlos/src/westfield/rewards_service'
+alias pub='cd /Users/carlos/src/gds/publishing-api'
+alias txt='cd /Users/carlos/Dropbox/txt'
+alias docs='cd /Users/carlos/Dropbox/docs'
+alias grati='cd /Users/carlos/src/scripts/grati'
 alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
-alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"
+alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlos https://vpn.digital.cabinet-office.gov.uk/ah"
