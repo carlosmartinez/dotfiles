@@ -101,4 +101,4 @@ alias txt='cd /Users/carlos/Dropbox/txt'
 alias docs='cd /Users/carlos/Dropbox/docs'
 alias grati='cd /Users/carlos/src/scripts/grati'
 alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
-alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlos https://vpn.digital.cabinet-office.gov.uk/ah"
+alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"
