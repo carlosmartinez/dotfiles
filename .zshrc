@@ -92,13 +92,6 @@ source $ZSH/oh-my-zsh.sh
 
 alias dx='git difftool'
 alias ctags="`brew --prefix`/bin/ctags"
-alias soc='cd /Users/carlos/src/tpo/tpo-social'
-alias cap='cd /Users/carlos/src/nib/core-apps-portal'
-alias pwc='cd /Users/carlos/src/pwc/pwc-enterprise'
-alias rew='cd /Users/carlos/src/westfield/rewards_service'
-alias pub='cd /Users/carlos/src/gds/publishing-api'
 alias txt='cd /Users/carlos/Dropbox/txt'
-alias docs='cd /Users/carlos/Dropbox/docs'
-alias grati='cd /Users/carlos/src/scripts/grati'
 alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
 alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"
