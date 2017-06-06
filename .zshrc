@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew coffee vim-interaction ruby tmux github gem osx)
+plugins=(git bundler brew coffee vim-interaction ruby tmux github gem osx)
 
 # User configuration
 
@@ -64,6 +64,8 @@ stty -ixon
 
 source $ZSH/oh-my-zsh.sh
 # source ~/bin/tmuxinator.zsh
+
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -95,3 +97,4 @@ alias ctags="`brew --prefix`/bin/ctags"
 alias txt='cd /Users/carlos/Dropbox/txt'
 alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
 alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"
+alias govlint="govuk-lint-ruby --diff --cached --format clang app config Gemfile lib spec"
