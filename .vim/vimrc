@@ -26,6 +26,7 @@ Plugin 'matchit.zip'
 Plugin 'mattn/emmet-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'othree/html5.vim'
+Plugin 'posva/vim-vue'
 Plugin 'rake.vim'
 Plugin 'repeat.vim'
 Plugin 'scrooloose/nerdcommenter'
@@ -314,7 +315,7 @@ map <leader>T :call RunNearestTest()<cr>
 map <leader>a :call RunTests('spec')<cr>
 
 
-" Switch between the last two files
+" Toggle between the two most recent buffers
 nnoremap <leader><leader> <c-^>
 onoremap <silent> j gj
 onoremap <silent> k gk

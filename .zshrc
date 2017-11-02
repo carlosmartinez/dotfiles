@@ -1,13 +1,12 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/carlos/.oh-my-zsh
-
 eval "$(rbenv init -)"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -98,3 +97,5 @@ alias txt='cd /Users/carlos/Dropbox/txt'
 alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
 alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"
 alias govlint="govuk-lint-ruby --diff --cached --format clang app config Gemfile lib spec"
+
+prompt_context() {}
