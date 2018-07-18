@@ -1,51 +1,52 @@
 [alias]
-	st = status -sb
-	ci = commit -v
-	co = checkout
-	br = branch
+  st = status -sb
+  ci = commit -v
+  co = checkout
+  br = branch
   ready = rebase -i @{u}
   lg = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
   standup = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since yesterday --author joe
-	d = difftool
+  d = difftool
+  lol = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 [diff]
-	tool = vimdiff
+  tool = vimdiff
 [difftool "diffmerge"]
-	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+  cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
 [merge]
-	tool = Kaleidoscope
+  tool = Kaleidoscope
 [user]
-	name = Carlos Martinez
-	email = carlosjmtz@gmail.com
+  name = Carlos Martinez
+  email = carlosjmtz@gmail.com
 [github]
-	user = carlosmartinez
+  user = carlosmartinez
 [push]
-	default = simple
+  default = simple
 [core]
-	excludesfile = /Users/carlos/.gitignore_global
-	editor = /usr/local/bin/vim
+  excludesfile = /Users/carlos/.gitignore_global
+  editor = /usr/local/bin/vim
 [mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustexitcode = true
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustexitcode = true
 [difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool]
-	prompt = false
+  prompt = false
 [mergetool]
-	prompt = false
+  prompt = false
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 [pager]
-	diff = diff-so-fancy | less --tabs=1,5 -RFX
-	show = diff-so-fancy | less --tabs=1,5 -RFX
+  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX
 [color]
-	ui = true
+  ui = true
 [filter "lfs"]
-	required = true
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	clean = git-lfs clean -- %f
+  required = true
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  clean = git-lfs clean -- %f
 [mergetool "diffmerge"]
-	trustExitCode = true
+  trustExitCode = true
