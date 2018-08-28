@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/carlos/.oh-my-zsh
+export ZSH=/Users/carlosm/.oh-my-zsh
 eval "$(rbenv init -)"
 
 # Set name of the theme to load.
@@ -93,7 +93,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias dx='git difftool'
 alias ctags="`brew --prefix`/bin/ctags"
-alias txt='cd /Users/carlos/Dropbox/txt'
+alias txt='cd /Users/carlosm/Dropbox/txt'
 alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
 alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"
 alias govlint="govuk-lint-ruby --diff --cached --format clang app config Gemfile lib spec"

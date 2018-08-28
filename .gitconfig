@@ -22,7 +22,7 @@
 [push]
   default = simple
 [core]
-  excludesfile = /Users/carlos/.gitignore_global
+  excludesfile = /Users/carlosm/.gitignore_global
   editor = /usr/local/bin/vim
 [mergetool "Kaleidoscope"]
   cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
