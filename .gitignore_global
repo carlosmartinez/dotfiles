@@ -6,3 +6,6 @@ tags.tmp
 .DS_Store
 .byebug_history
 venv/*
+.envrc
+test*
+*.mp4
