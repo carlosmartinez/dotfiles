@@ -56,10 +56,6 @@ plugins=(git bundler brew coffee vim-interaction ruby tmux github gem osx)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-export PATH="/Users/carlosm/miniconda3/bin:$PATH"
-
-export POW_DOMAINS=dev.gov.uk
-
 # allow ctrl-s mapping in vim
 stty -ixon
 
@@ -99,10 +95,6 @@ weather(){ curl -s "wttr.in/$1?m"}
 alias dx='git difftool'
 alias ctags="`brew --prefix`/bin/ctags"
 alias txt='cd /Users/carlosm/Dropbox/txt'
-alias vpn-github="sudo openconnect vpn.digital.cabinet-office.gov.uk/github"
-alias vpn-ah="sudo openconnect -v --pfs --no-dtls -u carlosmartinez https://vpn.digital.cabinet-office.gov.uk/ah"
-alias govlint="govuk-lint-ruby --diff --cached --format clang app config Gemfile lib spec"
-
 prompt_context() {}
 
 # tabtab source for serverless package
