@@ -8,6 +8,9 @@ vim.g.lazyvim_python_lsp = "pyright"
 -- Set to "ruff_lsp" to use the old LSP implementation version.
 vim.g.lazyvim_python_ruff = "ruff"
 
+-- Use absolute line numbers instead of relative
+vim.opt.relativenumber = false
+
 return {
   "akinsho/bufferline.nvim",
   opts = {
