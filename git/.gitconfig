@@ -1,0 +1,66 @@
+[alias]
+  st = status -sb
+  ci = commit -v
+  co = checkout
+  br = branch
+  ready = rebase -i @{u}
+  lg = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  standup = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since yesterday --author joe
+  d = difftool
+  lol = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+[diff]
+	tool = Kaleidoscope
+[difftool "diffmerge"]
+  cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = Kaleidoscope
+[checkout]
+  defaultRemote = origin
+[user]
+  name = Carlos Martinez
+  email = carlosjmtz@gmail.com
+	signingkey = /Users/carlosm/.ssh/id_ed25519.pub
+[github]
+  user = carlosmartinez
+[push]
+  default = simple
+[core]
+  excludesfile = /Users/carlosm/.gitignore_global
+  editor = /opt/homebrew/bin/nvim
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustexitcode = true
+	trustExitCode = true
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool]
+	prompt = false
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+[pager]
+  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX
+[color]
+  ui = true
+[filter "lfs"]
+  required = true
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  clean = git-lfs clean -- %f
+[mergetool "diffmerge"]
+  trustExitCode = true
+[pull]
+  rebase = true
+[rebase]
+  autoStash = true
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true

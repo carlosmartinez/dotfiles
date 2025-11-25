@@ -1,0 +1,14 @@
+carlosnotes.txt
+.tags
+tags
+tags.tmp
+.tags_sorted_by_file
+.DS_Store
+.byebug_history
+venv/*
+.claude/*
+.envrc
+# test* - REMOVED: This was hiding all test files in projects
+*.mp4
+public.pem
+private.pem
